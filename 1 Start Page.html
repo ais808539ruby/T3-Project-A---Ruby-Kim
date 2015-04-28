@@ -1,0 +1,188 @@
+<title> Save the PENGUIN </title>
+
+<!-- copy and paste the next 2 lines to setup the sound files, you must modify the loadsoundchrome.js file with your sounds -->
+<script type="text/javascript" src="Script/soundmanager2.js"></script>
+<script type="text/javascript" src="Script/loadsoundchrome.js"></script>
+<!-- Stop copying here -->
+
+<center>
+    <script type="text/javascript" src="Script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+
+//image variables
+//player
+PImage penguin[] = new PImage[2];
+//monsters
+PImage purpleMon;
+PImage greenMon;
+PImage blueMon;
+//others
+PImage fire;
+PImage fireBG;
+
+//font variables
+PFont paint;
+PFont block;
+
+//coordinate variables
+int fireR;
+int pengX;
+int fireX;
+
+//control variables
+int fireCont;
+int musicCont;
+int n;
+int time;
+int timeStart;
+int timeEnd;
+
+
+void setup()
+{
+	size(500,600);  
+	background(0);
+	frameRate(30);    
+
+	//specify image variables
+	n = 1;
+	while(n <= 2)
+	{
+		penguin[n] = loadImage("Images/penguinStanding" + n + ".png");
+		n = n + 1;
+	}
+	purpleMon = loadImage("Images/purpleMonster.png");
+	greenMon = loadImage("Images/greenMonster.png");
+	blueMon = loadImage("Images/blueMonster.png");
+	fire = loadImage("Images/fire.png");
+	fireBG = loadImage("Images/fireBG-main.jpg");
+
+	//specify font variables
+	paint = loadFont("KoreanYGYCM");
+	block = loadFont("Nature-Block");
+	
+	//specify coordinate variables
+	fireR = 80;
+	pengX = 30;
+	
+	//specify control variables
+	//0 = larger, 1 = smaller
+	fireCont = 0;
+	pengCont = 0;
+	//0 = play, 1 = stop play
+	musicCont = 0;
+	
+	time = 0;
+}
+
+
+void draw()
+{
+	background(0);
+	image(fireBG,0,0,500,600);
+	time = time + 1;
+	
+
+	//background music
+	if(musicCont == 0)
+	{
+		soundManager.play('s0');
+		musicCont = 1;
+	}
+	
+	
+	//link to "2 Main Menu.html"
+	if(mouseX > 0 && mouseX < 500 && mouseY > 0 && mouseY < 600)
+	{
+		if(mousePressed == true && mouseButton == LEFT)
+		{
+			link("2 Main Menu.html")
+		}
+	}
+	
+	
+	//fire size
+	if(fireR < 80)
+	{
+		fireCont = 0
+	}
+	
+	if(fireR > 100)
+	{
+		fireCont = 1
+	}
+	
+	if(fireCont == 0)
+	{
+		fireR = fireR + 1
+	}
+	
+	if(fireCont == 1)
+	{
+		fireR = fireR - 1
+	}
+
+
+	//fire
+	fireX = 20;
+	while(fireX <= 390)
+	{
+		image(fire,fireX,20,fireR,fireR)
+		fireX = fireX + 90;
+	}
+	
+	fireX = 20;
+	while(fireX <= 390)
+	{
+		image(fire,fireX,480,fireR,fireR)
+		fireX = fireX + 90;
+	}
+
+	
+	//monsters
+	image(purpleMon,10,20,120,120);
+	image(greenMon,220,20,100,100)
+	image(blueMon,330,20,150,150)
+
+		
+	//player
+	n = 1;
+	timeStart = 0;
+	timeEnd = 10;
+	while(n <= 2)
+	{
+		if(time >= timeStart && time <= timeEnd)
+		{
+			image(penguin[n],420,280,60,60);
+		}
+		
+		n = n + 1;
+		timeStart = timeStart + 10;
+		timeEnd = timeEnd + 10;
+	}
+	
+	if(time >= 20)
+	{
+		time = 0;
+	}
+		
+
+	//title
+	textFont(paint,100);
+	fill(236,0,51);
+	text("Save the",60,200)
+	textFont(block,120);
+	text("PENGUIN",20,350)
+	
+	textFont(paint,40);
+	fill(255,154,0);
+	text("Click to PLAY",130,450)
+}
+
+
+    </script>
+    <canvas id="mycanvas"></canvas>
+</center>

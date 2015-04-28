@@ -1,0 +1,220 @@
+<title> Save the PENGUIN - Settings </title>
+
+<!-- copy and paste the next 2 lines to setup the sound files, you must modify the loadsoundchrome.js file with your sounds -->
+<script type="text/javascript" src="Script/soundmanager2.js"></script>
+<script type="text/javascript" src="Script/loadsoundchrome.js"></script>
+<!-- Stop copying here -->
+
+<center>
+    <script type="text/javascript" src="Script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+
+//image variables
+//monsters
+PImage blueMon;
+PImage greenMon;
+//others
+PImage fireBG;
+
+//font variables
+PFont paint;
+PFont block;
+
+//coordinate variables
+int monY;
+
+//control variables
+int mouseCont;
+int mouse;
+int monCont;
+
+
+void setup()
+{
+	size(500,600);  
+	background(0);
+	frameRate(30);    
+
+	//specify image variables
+	blueMon = loadImage("Images/blueMonster.png");
+	greenMon = loadImage("Images/greenMonster.png");
+	fireBG = loadImage("Images/fireBackground.jpg");
+
+	//specify font variables
+	paint = loadFont("KoreanYGYCM");
+	block = loadFont("Nature-Block");
+	
+	//specify control variables
+	//0 = not click, 1 = click
+	mouseCont = 0;
+	mouse = 0;
+	//0 = show, 1 = not show
+	monCont = 1;
+}
+
+
+void draw()
+{
+	background(0);		
+	image(fireBG,0,0,500,600);
+	
+	
+	//mouse control
+	if(mousePressed == true && mouseButton == LEFT)
+	{
+		mouseCont = 1;
+	}
+	
+	
+	//return to main menu
+	if(mouseX > 150 && mouseX < 350 && mouseY > 535 && mouseY < 575)
+	{
+		fill(255,200,111);
+		stroke(255,200,111);
+		strokeWeight(0);
+		rect(150,535,200,40);
+		
+		if(mousePressed == true && mouseButton == LEFT)
+		{
+			link("2 Main Menu.html")
+		}
+	}
+	
+	fill(236,0,51);
+	textSize(20);
+	text("Return to Main Menu",160,560)	
+	
+		
+	//title
+	fill(255,200,111);
+	stroke(255,200,111);
+	rect(10,10,480,90);
+	
+	fill(236,0,51)
+	textFont(paint,50);
+	text("Save the",50,60)
+	textFont(block,60);
+	text("PENGUIN",250,65)
+
+	stroke(236,0,51);
+	strokeWeight(5);
+	line(10,90,490,90);
+	
+	
+	//monster image on sides of buttons
+	if(monCont == 0)
+	{
+		image(blueMon,120,monY,60,60);
+		image(greenMon,325,monY,60,60);
+	}
+	
+	
+	//buttons
+	//sound - on
+	if(mouseX > 115 && mouseX < 215 && mouseY > 240 && mouseY < 290)
+	{
+		monCont = 0;
+		monY = 150;
+		
+		fill(255,200,111);
+		stroke(255,200,111);
+		rect(115,240,100,50);
+		
+		mouse = 1;
+	}
+	
+	//sound - off
+	if(mouseX > 285 && mouseX < 385 && mouseY > 240 && mouseY < 290)
+	{
+		monCont = 0;
+		monY = 150;
+		fill(255,200,111);
+		stroke(255,200,111);
+		rect(285,240,100,50);
+		mouse = 2;
+	}
+	
+	//speed - slow
+	if(mouseX > 115 && mouseX < 215 && mouseY > 440 && mouseY < 490)
+	{
+		monCont = 0;
+		monY = 350;
+		fill(255,200,111);
+		stroke(255,200,111);
+		rect(115,440,100,50);
+		mouse = 3;
+	}
+	
+	//speed - fast
+	if(mouseX > 285 && mouseX < 385 && mouseY > 440 && mouseY < 490)
+	{
+		monCont = 0;
+		monY = 350;
+		fill(255,200,111);
+		stroke(255,200,111);
+		rect(285,440,100,50);
+		mouse = 4;
+	}
+	
+	//sound
+	textFont(block,50);
+	fill(153,0,33);
+	text("SOUND",190,200);
+	
+	//speed
+	text("SPEED",195,400);
+	
+	//sound - on
+	textFont(paint,40);	
+	text("On",145,280);
+	
+	//sound - off
+	text("Off",305,280);
+	
+	//speed - slow
+	text("Slow",127,480);
+	
+	//speed - fast
+	text("Fast",295,480);
+}
+
+
+//mouse click control
+void mouseClicked()
+{
+	//sound - on
+	if(mouseCont == 1 && mouse == 1)
+	{
+		sound = 0;
+		sessionStorage.transferx1 = sound;
+	}
+	
+	//sound - off
+	if(mouseCont == 1 && mouse == 2)
+	{
+		sound = 1;
+		sessionStorage.transferx1 = sound;
+	}
+	
+	//speed - slow
+	if(mouseCont == 1 && mouse == 3)
+	{
+		speed = 1;
+		sessionStorage.transferx2 = speed;
+	}
+	
+	//speed - fast
+	if(mouseCont == 1 && mouse == 4)
+	{
+		speed = 2;
+		sessionStorage.transferx2 = speed;
+	}
+}
+
+
+    </script>
+    <canvas id="mycanvas"></canvas>
+</center>

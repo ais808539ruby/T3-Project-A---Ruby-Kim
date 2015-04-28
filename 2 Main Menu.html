@@ -1,0 +1,191 @@
+<title> Save the PENGUIN - Main Menu </title>
+
+<!-- copy and paste the next 2 lines to setup the sound files, you must modify the loadsoundchrome.js file with your sounds -->
+<script type="text/javascript" src="Script/soundmanager2.js"></script>
+<script type="text/javascript" src="Script/loadsoundchrome.js"></script>
+<!-- Stop copying here -->
+
+<center>
+    <script type="text/javascript" src="Script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+
+//image variables
+//player
+PImage penguin;
+//monsters
+PImage purpleMon;
+//others
+PImage fire;
+PImage fireBG;
+
+//font variables
+PFont paint;
+PFont block;
+
+//coordinate variables
+int penguinX1;
+int penguinX2;
+int penguinY;
+
+//control variables
+int pengCont;
+int musicCont;
+
+
+void setup()
+{
+	size(500,600);  
+	background(0);
+	frameRate(30);    
+
+	//specify image variables
+	penguin = loadImage("Images/penguinStanding1.png");
+	purpleMon = loadImage("Images/purpleMonster.png");
+	fire = loadImage("Images/fire.png");
+	fireBG = loadImage("Images/fireBackground.jpg");
+
+	//specify font variables
+	paint = loadFont("KoreanYGYCM");
+	block = loadFont("Nature-Block");
+	
+	//specify control variables
+	//player: 0 = show, 1 = not show
+	pengCont = 1;
+	//0 = play, 1 = stop play
+	musicCont = 0;
+}
+
+
+void draw()
+{
+	background(0);		
+	image(fireBG,0,0,500,600);
+	
+	
+	//background music
+	if(musicCont == 0)
+	{
+		soundManager.play('s1');
+		musicCont = 1;
+	}
+	
+	
+	//title
+	fill(255,200,111);
+	stroke(255,200,111);
+	strokeWeight(0);
+	rect(10,10,480,90);
+	
+	fill(236,0,51);
+	text("Click to Select",210,580)
+	
+	textFont(paint,50);
+	
+	text("Save the",50,60)
+	textFont(block,60);
+	text("PENGUIN",250,65)
+
+	stroke(236,0,51);
+	strokeWeight(5);
+	line(10,90,490,90);
+	
+	
+	//buttons
+	//how to play
+	//shows penguin icon when mouse on top
+	if(mouseX > 140 && mouseX < 360 && mouseY > 130 && mouseY < 200)
+	{		
+		pengCont = 0;
+		penguinX1 = 80;
+		penguinX2 = 360;
+		penguinY = 135;
+		
+		//link to "2.1 How to Play.html"
+		if(mousePressed == true && mouseButton == LEFT)
+		{
+			link("2.1 How to Play.html")
+		}
+	}
+	
+	//settings
+	//shows penguin icon when mouse on top
+	if(mouseX > 140 && mouseX < 360 && mouseY > 230 && mouseY < 300)
+	{
+		pengCont = 0;
+		penguinX1 = 107;
+		penguinX2 = 333;
+		penguinY = 235;
+		
+		//link to "2.2 Settings.html"
+		if(mousePressed == true && mouseButton == LEFT)
+		{
+			link("2.2 Settings.html")
+		}
+	}
+	
+	//credits
+	//shows penguin icon when mouse on top
+	if(mouseX > 140 && mouseX < 360 && mouseY > 330 && mouseY < 400)
+	{
+		pengCont = 0;
+		penguinX1 = 115;
+		penguinX2 = 320;
+		penguinY = 335;
+		
+		//link to "2.3 Credits.html"
+		if(mousePressed == true && mouseButton == LEFT)
+		{
+			link("2.3 Credits.html")
+		}
+	}
+	
+	//play
+	//changes color
+	if(mouseX > 140 && mouseX < 360 && mouseY > 435 && mouseY < 505)
+	{
+		pengCont = 1;
+		
+		fill(255,200,111);
+		stroke(255,200,111);
+		rect(140,435,220,70);
+		
+		//link to "3.1 Game Level 1.html"
+		if(mousePressed == true && mouseButton == LEFT)
+		{
+			link("3.1 Game Level 1.html")
+		}
+	}
+	
+	
+	if(pengCont == 0)
+	{
+		image(penguin,penguinX1,penguinY,60,60);
+		image(penguin,penguinX2,penguinY,60,60);
+	}
+	
+	textFont(paint,40);
+	fill(153,0,33);
+	text("How to Play",150,180)
+	text("Settings",175,280)
+	text("Credits",183,380)
+	
+	textFont(block,50);
+	text("PLAY!",190,490)
+	
+	image(fire,140,445,50,50)
+	image(purpleMon,310,445,50,50)
+}
+
+
+//mouse click control
+void mouseClicked()
+{
+}
+
+
+    </script>
+    <canvas id="mycanvas"></canvas>
+</center>

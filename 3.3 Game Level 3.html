@@ -1,0 +1,548 @@
+<title> Save the PENGUIN - Level 3 </title>
+
+<!-- copy and paste the next 2 lines to setup the sound files, you must modify the loadsoundchrome.js file with your sounds -->
+<script type="text/javascript" src="Script/soundmanager2.js"></script>
+<script type="text/javascript" src="Script/loadsoundchrome.js"></script>
+<!-- Stop copying here -->
+
+<center>
+    <script type="text/javascript" src="Script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+
+//image variables
+//player
+PImage pengStand;
+PImage pengSit;
+//monsters
+PImage orangeMon;
+PImage purpleMon;
+PImage blueMon;
+PImage greenMon;
+//others
+PImage fire;
+
+//font variables
+PFont paint;
+PFont barun;
+
+//coordinate variables
+//player
+int pengX;
+int pengY;
+int pengW = 50;
+int pengH = 50;
+//monsters
+int orangeMonX;
+int purpleMonX;
+int blueMonY;
+int greenMonY;
+//speed
+int oSpd;
+int pSpd;
+int bSpd;
+int gSpd;
+
+//control variables
+//player
+int playerCont;
+//monsters
+int monCont;
+int orangeMonCont;
+int purpleMonCont;
+int blueMonCont;
+int greenMonCont;
+//others
+int fireCont;
+int mouse;
+int mouseCont;
+int musicCont;
+
+//distance variables
+//monsters
+int dOrangeMon;
+int dPurpleMon;
+int dBlueMon;
+int dGreenMon;
+//others
+int dFire11;
+int dFire12;
+int dFire13;
+int dFire21;
+int dFire22;
+int dFire23;
+
+void setup()
+{
+	size(500,600);  
+    background(0);
+    frameRate(30);    
+
+    //specify image variables
+    pengStand = loadImage("Images/penguinStanding1.png");
+    pengSit = loadImage("Images/penguinSitting.png");
+    orangeMon = loadImage("Images/orangeMonster.png");
+    purpleMon = loadImage("Images/purpleMonster.png");
+    blueMon = loadImage("Images/blueMonster.png");
+    greenMon = loadImage("Images/greenMonster.png");
+    fire = loadImage("Images/fire.png");
+    fireBG = loadImage("Images/fireBackground.jpg");
+    
+    //specify coordinate variables
+	//player
+	pengX = 0;
+	pengY = 0;
+	//monsters
+	orangeMonX = 50;
+	purpleMonX = 400;
+	blueMonY = 450;
+	greenMonY = 100;
+	//speed
+	oSpd = 10;
+	
+	//specify control variables
+	//player: 0 = move, 1 = not move
+	playerCont = 0;
+	//monster: 0 = move, 1 = not move
+	monCont = 0;
+	//monsters: 0 = move right/up, 1 = move left/down
+	orangeMonCont = 0;
+	purpleMonCont = 0;
+	blueMonCont = 0;
+	greenMonCont = 0;
+	//others: 0 = show, 1 = not show
+	fireCont = 0;
+	mouse = 0;
+	mouseCont = 0;
+	//0 = play, 1 = stop play
+	musicCont = 0;
+}
+
+
+void draw()
+{
+	background(fireBG);		
+	
+	
+	//background music
+	if(musicCont == 0)
+	{
+		soundManager.play('s2');
+		musicCont = 1;
+	}
+		
+	
+	//mouse button control
+	if(mousePressed == true && mouseButton == LEFT)
+	{
+		mouseCont = 1
+	}
+	
+	
+	//starting point
+	fill(153,0,33);
+	stroke(153,0,33);
+	rect(0,0,50,50);
+
+	fill(255,200,111);
+	text("START",6,30);
+	
+	
+	//ending point
+	fill(153,0,33);
+	rect(450,550,50,50);
+	
+	fill(255,200,111);
+	text("END",463,580);
+		
+
+	//player
+	if(playerCont == 0)
+	{
+		//player icon when playing
+		image(pengStand,pengX,pengY,pengW,pengH);
+		
+		//movement control
+		if(keyPressed == true)
+		{
+			//player moves right
+			if(keyCode == RIGHT && pengX < 450)
+			{
+				pengX = pengX + 10			
+			}
+		
+			//player moves left
+			if(keyCode == LEFT && pengX > 0)
+			{
+				pengX = pengX - 10
+			}
+		
+			//player moves down
+			if(keyCode == DOWN && pengY < 550)
+			{
+				pengY = pengY + 10
+			}
+		
+			//player moves up
+			if(keyCode == UP && pengY > 0)
+			{
+				pengY = pengY - 10
+			}
+		}
+	}
+	
+	if(playerCont == 1)
+	{
+		//player icon when game over
+		image(pengSit,pengX,pengY,pengW,pengH);
+	}
+	
+	
+	//fire
+	if(fireCont == 0)
+	{
+		//1st obstacle lane
+		image(fire,50,200,50,50);
+		image(fire,100,200,50,50);
+		image(fire,50,250,50,50);
+		image(fire,100,250,50,50);
+		image(fire,200,200,50,50);
+		image(fire,250,200,50,50);
+		image(fire,200,250,50,50);
+		image(fire,250,250,50,50);
+		image(fire,350,200,50,50);
+		image(fire,400,200,50,50);
+		image(fire,350,250,50,50);
+		image(fire,400,250,50,50);
+		
+		//2nd obstacle lane
+		image(fire,50,400,50,50);
+		image(fire,100,400,50,50);
+		image(fire,50,450,50,50);
+		image(fire,100,450,50,50);
+		image(fire,200,400,50,50);
+		image(fire,250,400,50,50);
+		image(fire,200,450,50,50);
+		image(fire,250,450,50,50);
+		image(fire,350,400,50,50);
+		image(fire,400,400,50,50);
+		image(fire,350,450,50,50);
+		image(fire,400,450,50,50);
+	}
+	
+	
+	//monsters
+	
+	//orange monster
+	image(orangeMon,orangeMonX,100,50,50);
+	
+	if(orangeMonX < 50)
+	{
+		orangeMonCont = 0
+	}
+	
+	if(orangeMonX > 400)
+	{
+		orangeMonCont = 1
+	}
+	
+	//monster moves R
+	if(orangeMonCont == 0 && monCont == 0)
+	{
+		orangeMonX = orangeMonX + oSpd
+	}
+	
+	//monster moves L
+	if(orangeMonCont == 1 && monCont == 0)
+	{
+		orangeMonX = orangeMonX - oSpd
+	}
+		
+	//purple monster
+	image(purpleMon,purpleMonX,300,50,50);
+	
+	if(purpleMonX < 50)
+	{
+		purpleMonCont = 0
+	}
+	
+	if(purpleMonX > 400)
+	{
+		purpleMonCont = 1
+	}
+	
+	pSpd = random(5,15);
+	
+	//monster moves R
+	if(purpleMonCont == 0 && monCont == 0)
+	{
+		purpleMonX = purpleMonX + pSpd
+	}
+	
+	//monster moves L
+	if(purpleMonCont == 1 && monCont == 0)
+	{
+		purpleMonX = purpleMonX - pSpd
+	}
+	
+	//blue monster
+	image(blueMon,0,blueMonY,50,50);
+	
+	if(blueMonY < 100)
+	{
+		blueMonCont = 0
+	}
+	
+	if(blueMonY > 450)
+	{
+		blueMonCont = 1
+	}
+
+	bSpd = random(10,15);
+
+	//monster moves UP
+	if(blueMonCont == 0 && monCont == 0)
+	{
+		blueMonY = blueMonY + bSpd
+	}
+	
+	//monster moves DOWN
+	if(blueMonCont == 1 && monCont == 0)
+	{
+		blueMonY = blueMonY - bSpd
+	}
+	
+	//green monster
+	image(greenMon,450,greenMonY,50,50);
+	
+	if(greenMonY < 100)
+	{
+		greenMonCont = 0
+	}
+	
+	if(greenMonY > 450)
+	{
+		greenMonCont = 1
+	}
+	
+	gSpd = random(15,20);
+	
+	//monster moves UP
+	if(greenMonCont == 0 && monCont == 0)
+	{
+		greenMonY = greenMonY + gSpd
+	}
+	
+	//monster moves DOWN
+	if(greenMonCont == 1 && monCont == 0)
+	{
+		greenMonY = greenMonY - gSpd
+	}
+	
+
+	//collision with monster -> game over
+	
+	//orange monster
+	dOrangeMon = (int) sqrt(sq((pengX + pengW/2) - (orangeMonX + 25)) + sq((pengY + pengH/2) - 125));
+
+	if(dOrangeMon < 40)
+	{
+		//player changes icon
+		playerCont = 1;
+		//monsters stop moving
+		monCont = 1;
+	}
+
+	//purple monster
+	dPurpleMon = (int) sqrt(sq((pengX + pengW/2) - (purpleMonX + 25)) + sq((pengY + pengH/2) - 325));
+
+	if(dPurpleMon < 40)
+	{
+		//player changes icon
+		playerCont = 1;
+		//monsters stop moving
+		monCont = 1;
+	}
+	
+	//blue monster
+	dBlueMon = (int) sqrt(sq((pengX + pengW/2) - 25) + sq((pengY + pengH/2) - (blueMonY + 25)));
+
+	if(dBlueMon < 40)
+	{
+		//player changes icon
+		playerCont = 1;
+		//monsters stop moving
+		monCont = 1;
+	}
+	
+	//green monster
+	dGreenMon = (int) sqrt(sq((pengX + pengW/2) - 475) + sq((pengY + pengH/2) - (greenMonY + 25)));
+
+	if(dGreenMon < 40)
+	{
+		//player changes icon
+		playerCont = 1;
+		//monsters stop moving
+		monCont = 1;
+	}
+
+	//collision with fire -> game over
+	
+	//1st obstacle lane
+	dFire11 = (int) sqrt(sq((pengX + pengW/2) - 100) + sq((pengY + pengH/2) - 250));
+
+	if(dFire11 < 65)
+	{
+		//player changes icon
+		playerCont = 1;
+		//monsters stop moving
+		monCont = 1;
+	}
+	
+	dFire12 = (int) sqrt(sq((pengX + pengW/2) - 250) + sq((pengY + pengH/2) - 250));
+
+	if(dFire12 < 65)
+	{
+		//player changes icon
+		playerCont = 1;
+		//monsters stop moving
+		monCont = 1;
+	}
+	
+	dFire13 = (int) sqrt(sq((pengX + pengW/2) - 400) + sq((pengY + pengH/2) - 250));
+
+	if(dFire13 < 65)
+	{
+		//player changes icon
+		playerCont = 1;
+		//monsters stop moving
+		monCont = 1;
+	}
+	
+	//2nd obstacle lane
+	dFire21 = (int) sqrt(sq((pengX + pengW/2) - 100) + sq((pengY + pengH/2) - 450));
+
+	if(dFire21 < 65)
+	{
+		//player changes icon
+		playerCont = 1;
+		//monsters stop moving
+		monCont = 1;
+	}
+	
+	dFire22 = (int) sqrt(sq((pengX + pengW/2) - 250) + sq((pengY + pengH/2) - 450));
+
+	if(dFire22 < 65)
+	{
+		//player changes icon
+		playerCont = 1;
+		//monsters stop moving
+		monCont = 1;
+	}
+	
+	dFire23 = (int) sqrt(sq((pengX + pengW/2) - 400) + sq((pengY + pengH/2) - 450));
+
+	if(dFire23 < 65)
+	{
+		//player changes icon
+		playerCont = 1;
+		//monsters stop moving
+		monCont = 1;
+	}
+
+
+	//specify font variables
+	paint = loadFont("KoreanYGYCM");
+	barun = loadFont("NanumBarunGothic");
+
+
+	//game over
+	if(playerCont == 1 && monCont == 1 && pengY != 550)
+	{
+		//fire disappears
+		fireCont = 1;
+		
+		//game over message
+		fill(255,200,111);
+		stroke(255,200,111);
+		rect(50,250,400,160)
+		
+		fill(255,89,0);
+		textFont(paint,30);
+		text("Game Over",180,300);
+		
+		fill(255,130,64);
+		stroke(255,130,64);
+		rect(204,315,62,25)
+		
+		fill(153,0,33);
+		textFont(barun,21);
+		text("Click HERE to replay",155,335)
+		text("Click elsewhere to end game",120,385)
+		textSize(15);
+		text("OR",240,360)
+
+		//mouse click control to replay / game over
+		mouse = 1;
+	}
+
+	//level up
+	if(pengX == 450 && pengY == 550)
+	{
+		//monsters & player stop moving
+		monCont = 1;
+		playerCont = 1;
+		//fire disappears
+		fireCont = 1;
+		
+		//level up message
+		fill(255,200,111);
+		stroke(255,200,111);
+		rect(50,250,400,160)
+		
+		fill(255,89,0);
+		textFont(paint,30);
+		text("Congratulations!",140,300);
+		text("You leveled up!",150,340);
+		
+		fill(153,0,33);
+		textFont(barun,19);
+		text("Click anywhere on the page to continue",75,380)
+		
+		//mouse click control to continue
+		mouse = 2;
+	}	
+}
+
+
+//mouse click control
+void mouseClicked()
+{
+	if(mouseCont == 1 && mouse == 1)
+	{
+		//game over
+		if(mouseX > 0 && mouseX < 500 && mouseY > 0 && mouseY < 600)
+		{
+			link("4 Game End.html")
+		}
+		
+		//replay
+		if(mouseX > 204 && mouseX < 262 && mouseY > 315 && mouseY < 340)
+		{
+			link("3.3 Game Level 3.html")
+		}
+	}
+	
+	//level up
+	if(mouseCont == 1 && mouse == 2)
+	{
+		link("3.4 Game Level 4.html")
+	}
+}
+
+
+    </script>
+    <canvas id="mycanvas"></canvas>
+</center>

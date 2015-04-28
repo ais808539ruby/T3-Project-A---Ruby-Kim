@@ -1,0 +1,95 @@
+<title> Save the PENGUIN - Credits </title>
+
+<!-- copy and paste the next 2 lines to setup the sound files, you must modify the loadsoundchrome.js file with your sounds -->
+<script type="text/javascript" src="Script/soundmanager2.js"></script>
+<script type="text/javascript" src="Script/loadsoundchrome.js"></script>
+<!-- Stop copying here -->
+
+<center>
+    <script type="text/javascript" src="Script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+
+//image variables
+PImage fireBG;
+
+//font variables
+PFont paint;
+PFont block;
+
+
+void setup()
+{
+	size(500,600);  
+	background(0);
+	frameRate(30);    
+
+	//specify image variables
+	fireBG = loadImage("Images/fireBackground.jpg");
+
+	//specify font variables
+	paint = loadFont("KoreanYGYCM");
+	block = loadFont("Nature-Block");
+}
+
+
+void draw()
+{
+	background(0);		
+	image(fireBG,0,0,500,600);
+	
+		
+	//return to main menu
+	if(mouseX > 150 && mouseX < 350 && mouseY > 535 && mouseY < 575)
+	{
+		fill(255,200,111);
+		stroke(255,200,111);
+		strokeWeight(0);
+		rect(150,535,200,40);
+		
+		if(mousePressed == true && mouseButton == LEFT)
+		{
+			link("2 Main Menu.html")
+		}
+	}
+	
+	fill(236,0,51);
+	textFont(paint,20);
+	text("Return to Main Menu",160,560)	
+	
+	
+	//credits
+	fill(153,0,33);
+	textSize(30)
+	text("Design & Programming",100,200)
+	text("Music from",170,400)
+	textSize(20)
+	text("CPG3/4C Trimester Project",120,320)
+	text("NEXON Korea - Crazy Arcade",120,450)
+	text("playONloop.com",173,480)
+	
+	textFont(block,50);
+	text("Ruby Kim",140,270)
+		
+	//title
+	fill(255,200,111);
+	stroke(255,200,111);
+	rect(10,10,480,90);
+	
+	fill(236,0,51)
+	textFont(paint,50);
+	text("Save the",50,60)
+	textFont(block,60);
+	text("PENGUIN",250,65)
+
+	stroke(236,0,51);
+	strokeWeight(5);
+	line(10,90,490,90);
+}
+
+
+    </script>
+    <canvas id="mycanvas"></canvas>
+</center>

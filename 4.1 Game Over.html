@@ -1,0 +1,189 @@
+<title> Save the PENGUIN - GAME OVER </title>
+
+<!-- copy and paste the next 2 lines to setup the sound files, you must modify the loadsoundchrome.js file with your sounds -->
+<script type="text/javascript" src="soundmanager2.js"></script>
+<script type="text/javascript" src="loadsoundchrome.js"></script>
+<!-- Stop copying here -->
+
+<center>
+    <script type="text/javascript" src="../processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+
+//image variables
+//monsters
+PImage greenMon;
+PImage blueMon;
+//others
+PImage fire;
+PImage fireBG;
+
+//font variables
+PFont paint;
+PFont block;
+
+//coordinate variables
+int fireR;
+int greenMonX;
+int blueMonY;
+
+//control variables
+int fireCont;
+int greenMonCont;
+int blueMonCont;
+
+
+void setup()
+{
+	size(500,600);  
+	background(0);
+	frameRate(30);    
+
+	//specify image variables
+	fire = loadImage("Images/fire.png");
+	greenMon = loadImage("Images/greenMonster.png");
+	blueMon = loadImage("Images/blueMonster.png");
+	fireBG = loadImage("Images/fireBG-main.jpg");
+
+	//specify font variables
+	paint = loadFont("KoreanYGYCM");
+	block = loadFont("Nature-Block");
+	
+	//specify coordinate variables
+	fireR = 60;
+	greenMonX = 50;
+	blueMonY = 300;
+	
+	//specify control variables
+	fireCont = 0;
+	greenMonCont = 0;
+}
+
+
+void draw()
+{
+	background(0);
+	image(fireBG,0,0,500,600);
+
+
+	//click to replay
+	if(mouseX > 0 && mouseX < 500 && mouseY > 0 && mouseY < 600)
+	{
+		//link to "3.1 Game Level 1.html"
+		if(mousePressed == true && mouseButton == LEFT)
+		{
+			link("3.1 Game Level 1.html")
+		}
+	}
+	
+	//click to end
+	if(mouseX > 190 && mouseX < 295 && mouseY > 510 && mouseY < 560)
+	{
+		//link to "4.2 End Page.html"
+		if(mousePressed == true && mouseButton == LEFT)
+		{
+			link("4.2 End Page.html")
+		}
+	}
+	
+	
+	//fire size
+	if(fireR < 60)
+	{
+		fireCont = 0
+	}
+	
+	if(fireR > 70)
+	{
+		fireCont = 1
+	}
+	
+	if(fireCont == 0)
+	{
+		fireR = fireR + 0.5
+	}
+	
+	if(fireCont == 1)
+	{
+		fireR = fireR - 0.5
+	}
+	
+	
+	//monsters move
+	//green monster
+	if(greenMonX < 50)
+	{
+		greenMonCont = 0
+	}
+	
+	if(greenMonX > 55)
+	{
+		greenMonCont = 1
+	}
+	
+	if(greenMonCont == 0)
+	{
+		greenMonX = greenMonX + 0.5
+	}
+	
+	if(greenMonCont == 1)
+	{
+		greenMonX = greenMonX - 0.5
+	}
+	
+	//blue monster
+	if(blueMonY < 300)
+	{
+		blueMonCont = 0
+	}
+	
+	if(blueMonY > 290)
+	{
+		blueMonCont = 1
+	}
+	
+	if(blueMonCont == 0)
+	{
+		blueMonY = blueMonY + 1
+	}
+	
+	if(blueMonCont == 1)
+	{
+		blueMonY = blueMonY - 1
+	}
+	
+
+	//title
+	textFont(block,40);
+	fill(177,44,73);
+	text("PENGUIN",240,102)
+	textFont(paint,40);
+	text("Save the",80,100)
+	image(fire,380,50,fireR,fireR)
+	
+
+	//game over message
+	textSize(100);
+	fill(236,0,51);
+	text("GAME",130,240)
+	text("OVER",145,370)
+	image(greenMon,greenMonX,300,80,80)
+	image(blueMon,380,blueMonY,80,80)
+	
+	textSize(40);
+	fill(255,180,64);
+	text("Click to REPLAY",110,480)
+	
+	fill(177,44,73);
+	stroke(177,44,73);
+	rect(190,510,105,50);
+	fill(255,154,0);
+	text("Click HERE to END",100,550)
+	
+}
+
+    </script>
+    <canvas id="mycanvas"></canvas>
+</center>

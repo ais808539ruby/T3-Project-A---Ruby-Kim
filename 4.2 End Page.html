@@ -1,0 +1,153 @@
+<title> Save the PENGUIN - THE END </title>
+
+<!-- copy and paste the next 2 lines to setup the sound files, you must modify the loadsoundchrome.js file with your sounds -->
+<script type="text/javascript" src="Script/soundmanager2.js"></script>
+<script type="text/javascript" src="Script/loadsoundchrome.js"></script>
+<!-- Stop copying here -->
+
+<center>
+    <script type="text/javascript" src="Script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+
+//image variables
+//player
+PImage penguin;
+//monsters
+PImage purpleMon;
+PImage greenMon;
+PImage blueMon;
+//others
+PImage fire;
+PImage fireBG;
+
+//font variables
+PFont paint;
+PFont block;
+
+//coordinate variables
+int rad;
+int fireR;
+int pengX;
+
+//control variables
+int fireCont;
+int radCont;
+
+
+void setup()
+{
+	size(500,600);  
+	background(0);
+	frameRate(30);    
+
+	//specify image variables
+	penguin = loadImage("Images/penguinStanding.png");
+	purpleMon = loadImage("Images/purpleMonster.png");
+	greenMon = loadImage("Images/greenMonster.png");
+	blueMon = loadImage("Images/blueMonster.png");
+	fire = loadImage("Images/fire.png");
+	fireBG = loadImage("Images/fireBG-main.jpg");
+
+	//specify font variables
+	paint = loadFont("KoreanYGYCM");
+	block = loadFont("Nature-Block");
+	
+	//specify coordinate variables
+	fireR = 80;
+	rad = 60;
+	
+	//specify control variables
+	//0 = larger, 1 = smaller
+	fireCont = 0;
+	radCont = 0;
+}
+
+
+void draw()
+{
+	background(0);
+	image(fireBG,0,0,500,600);
+	
+	
+	//background music
+	//soundManager.play('s0');
+
+	
+	//fire size
+	if(fireR < 80)
+	{
+		fireCont = 0
+	}
+	
+	if(fireR > 100)
+	{
+		fireCont = 1
+	}
+	
+	if(fireCont == 0)
+	{
+		fireR = fireR + 1
+	}
+	
+	if(fireCont == 1)
+	{
+		fireR = fireR - 1
+	}
+	
+	if(rad < 60)
+	{
+		radCont = 0
+	}
+	
+	if(rad > 70)
+	{
+		radCont = 1
+	}
+	
+	if(radCont == 0)
+	{
+		rad = rad + 0.5
+	}
+	
+	if(radCont == 1)
+	{
+		rad = rad - 0.5
+	}
+	
+	
+	//fire
+	image(fire,20,20,fireR,fireR)
+	image(fire,110,20,fireR,fireR)
+	image(fire,200,20,fireR,fireR)
+	image(fire,295,20,fireR,fireR)
+	image(fire,390,20,fireR,fireR)
+	image(fire,410,260,80,80)
+
+	
+	//monsters
+	image(purpleMon,10,20,120,120);
+	image(greenMon,220,20,100,100)
+	image(blueMon,330,20,150,150)
+
+
+	//title
+	textFont(paint,100);
+	fill(236,0,51);
+	text("Save the",60,200)
+	textFont(block,120);
+	text("PENGUIN",20,350)
+	
+	textFont(paint,50);
+	fill(255,154,0);
+	text("THE END",160,500)
+	image(penguin,80,450,rad,rad)
+	image(fire,350,440,rad + 10,rad + 10)
+}
+
+
+    </script>
+    <canvas id="mycanvas"></canvas>
+</center>
